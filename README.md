@@ -1,5 +1,9 @@
 # CS422_Project_SleepingBeauty
-A project to help users manage their sleeping habit and wake up routine.
-1551034 Lâm Lê Thanh Thế
-1551044 Trần Văn Duy Tuệ
-1551025 Liêng Thế Phy
+  This is a project from group 3, 15CTT. Our group includes:
+
+- Lam Le Thanh The
+- Tran Van Duy Tue
+- Lieng The Phy
+
+A project to help users manage their sleeping habit and wake up routine.  
+The repository is comprised of documents, source code, and release. 
