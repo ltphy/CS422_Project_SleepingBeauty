@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Sleeping Beauty</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Alarm</string>
+    <string name="title_dashboard">Clock</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="repeat_string">Repeat</string>
+    <string name="clock_sample">12:34 PM</string>
+    <string name="alarm_method_sample">Alarm Method</string>
 </resources>
