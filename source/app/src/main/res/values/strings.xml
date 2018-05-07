@@ -6,5 +6,14 @@
     <string name="title_notifications">Notifications</string>
     <string name="repeat_string">Repeat</string>
     <string name="clock_sample">12:34 PM</string>
-    <string name="alarm_method_sample">Alarm Method</string>
+    <string name="alarm_method_sample">Off method: Quiz</string>
+    <string name="every">every</string>
+    <string name="day">day</string>
+    <string name="days">days</string>
+    <string name="hour">hour(s)</string>
+    <string name="text_sample">Sample</string>
+    <string name="date_sample">Fri, May 4 2018</string>
+    <string name="vibrate">Vibrate</string>
+    <string name="ringtone">Ringtone</string>
+    <string name="typeAns">Type in your answer</string>
 </resources>
