@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/cardView"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="6dp"
     android:layout_marginBottom="3dp"
     android:layout_marginRight="6dp"
     android:layout_marginLeft="6dp"
     style="@style/AppTheme"
-    app:cardElevation="8dp"
-    app:cardCornerRadius="10dp">
+    app:cardElevation="4dp"
+    app:cardCornerRadius="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,15 +46,15 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:id="@+id/imgVibrate"
-                    android:layout_marginEnd="30dp"
-                    android:src="@drawable/ic_vibrate_black_64dp"/>
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_vibration_black_48dp"/>
 
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:src="@drawable/ic_loop_black_64dp"
                     android:layout_marginEnd="10dp"
                     android:id="@+id/imgRepeat"/>
