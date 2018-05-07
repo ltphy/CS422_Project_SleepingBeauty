@@ -2,17 +2,96 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.group3.sleepingbeauty.MainActivity">
+    tools:context=".MainActivity"
+    android:background="#e0e0e0"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:id="@+id/frameView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#EEEEEE">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recyclerView">
+
+
+        </android.support.v7.widget.RecyclerView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/clockMainView"
+            android:gravity="center"
+            android:paddingTop="10dp">
+
+            <AnalogClock
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"/>
+
+            <TextClock
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:format12Hour="hh:mm:ss\naa"
+                android:id="@+id/textClockMainView"
+                android:textAlignment="center"
+                android:textSize="63sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorTextDark"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textDateMainView"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="40dp"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorTextDark"
+                />
+
+
+        </LinearLayout>
+
+
+        <com.group3.sleepingbeauty.Utils.MovableFloatingActionButton
+            android:id="@+id/floatingActionButtonView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="20dp"
+            app:borderWidth="0dp"
+            android:background="@color/colorAccent"
+            android:src="@drawable/ic_add_white_48dp"
+            app:elevation="20dp"
+            app:fabSize="normal" />
+
+
+    </FrameLayout>
+
+
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:background="?android:attr/windowBackground"
+        android:backgroundTint="#e0e0e0"
+        app:menu="@menu/navigation" />
 
 </LinearLayout>
