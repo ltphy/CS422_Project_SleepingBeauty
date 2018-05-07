@@ -75,8 +75,22 @@ public class Alarm {
             c.set(Calendar.SECOND, 0);
             */
 
-            alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, 5 * 1000, alarmIntent);
+
+            // FOR DEMO ONLY
+            //alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, 5 * 1000, alarmIntent);
             // fire in 5 s, for demo only, should use RTC_WAKEUP and the exact time set
+
+            // FOR PRODUCT
+            int h = calendar.get(Calendar.HOUR_OF_DAY), m = calendar.get(Calendar.MINUTE);
+
+            Calendar c = Calendar.getInstance();
+            c.setTimeInMillis(System.currentTimeMillis());
+            c.set(Calendar.HOUR_OF_DAY, h);
+            c.set(Calendar.MINUTE, m);
+            c.set(Calendar.SECOND, 0);
+
+
+            alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), alarmIntent);
         }
     }
 
