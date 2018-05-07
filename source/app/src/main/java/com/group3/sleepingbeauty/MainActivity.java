@@ -1,8 +1,11 @@
 package com.group3.sleepingbeauty;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
+import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -14,13 +17,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
+import com.group3.sleepingbeauty.Alarm.Alarm;
 import com.group3.sleepingbeauty.Alarm.AlarmAdapter;
+import com.group3.sleepingbeauty.Utils.Global;
+import com.group3.sleepingbeauty.Utils.MovableFloatingActionButton;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-
-    private TextView mTextMessage;
 
     private ArrayList<Alarm> alarmList;
     private AlarmAdapter alarmAdapter;
@@ -32,15 +40,13 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_alarm:
-                    mTextMessage.setText(R.string.title_home);
                     initAlarmView();
                     return true;
                 case R.id.navigation_clock:
-                    mTextMessage.setText(R.string.title_dashboard);
                     initClockView();
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                    Global.notImplementedPrompt(MainActivity.this);
                     return true;
             }
             return false;
@@ -52,52 +58,73 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
+        // Must retrieve the list of fired (and not repeated) alarms to turn them off
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_clock);
 
+        alarmList = new ArrayList<>();
+        alarmList.add(new Alarm(MainActivity.this, Calendar.getInstance(), "quiz", 0, null, 100, true, false));
+        alarmList.add(new Alarm(MainActivity.this, Calendar.getInstance(), "quiz", 2, null, 50, true, false));
+        alarmList.add(new Alarm(MainActivity.this, Calendar.getInstance(), "quiz", 0, null, 80, false, false));
         alarmAdapter = new AlarmAdapter(MainActivity.this, alarmList);
 
-        // TODO: Retrieve alarm data to alarmList
-
         alarmAdapter.notifyDataSetChanged();
+
+        ((TextView)findViewById(R.id.textDateMainView)).setText(new SimpleDateFormat("EEE, MMM d, yyyy", Locale.US).format(Calendar.getInstance().getTime()));
     }
 
     private void initAlarmView() {
-
-        // show FAB
-        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.floatingActionButtonView);
-        fab.setVisibility(View.VISIBLE);
-
         // hide clock
         LinearLayout clockMainView = (LinearLayout)findViewById(R.id.clockMainView);
-        clockMainView.setVisibility(View.INVISIBLE);
+        clockMainView.setVisibility(View.GONE);
 
-        RecyclerView rv = (RecyclerView)findViewById(R.id.recyclerView);
-        rv.setHasFixedSize(true);
+        final RecyclerView rv = (RecyclerView)findViewById(R.id.recyclerView);
+        rv.setVisibility(View.VISIBLE);
 
-        RecyclerView.LayoutManager layoutManager;
-        layoutManager = new LinearLayoutManager(this);
+        final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rv.setLayoutManager(layoutManager);
 
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(alarmAdapter);
+
+        // show FAB
+        MovableFloatingActionButton fab = (MovableFloatingActionButton) findViewById(R.id.floatingActionButtonView);
+        fab.setVisibility(View.VISIBLE);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final int n = alarmList.size();
+                alarmList.add(new Alarm(MainActivity.this, null, "quiz", 0, null, 100, false, false));
+                alarmAdapter.notifyItemInserted(n);
+                layoutManager.smoothScrollToPosition(rv, null, n);
+            }
+        });
     }
 
     private void initClockView() {
         // hide FAB
-        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.floatingActionButtonView);
-        fab.setVisibility(View.INVISIBLE);
+        MovableFloatingActionButton fab = (MovableFloatingActionButton) findViewById(R.id.floatingActionButtonView);
+        fab.setVisibility(View.GONE);
 
         // show clock
         LinearLayout clockMainView = (LinearLayout)findViewById(R.id.clockMainView);
         clockMainView.setVisibility(View.VISIBLE);
 
         RecyclerView rv = (RecyclerView)findViewById(R.id.recyclerView);
-        rv.setVisibility(View.INVISIBLE);
-
-
+        rv.setVisibility(View.GONE);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == Global.REQ_CODE_RINGTONE_SYS) {
+                Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+                alarmAdapter.updateRingtone(uri);
+            }
+        }
+    }
 }
