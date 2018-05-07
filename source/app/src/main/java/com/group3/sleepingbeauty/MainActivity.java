@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         alarmList.add(new Alarm(MainActivity.this, Calendar.getInstance(), "quiz", 0, null, 100, true, false));
         alarmList.add(new Alarm(MainActivity.this, Calendar.getInstance(), "quiz", 2, null, 50, true, false));
         alarmList.add(new Alarm(MainActivity.this, Calendar.getInstance(), "quiz", 0, null, 80, false, false));
+
+
         alarmAdapter = new AlarmAdapter(MainActivity.this, alarmList);
 
         alarmAdapter.notifyDataSetChanged();
